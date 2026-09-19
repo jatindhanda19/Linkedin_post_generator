@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LinkedIn Auto Post — Professional Content Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg-primary: #0a0e17;
+  --bg-secondary: #111620;
+  --bg-tertiary: #161c28;
+  --bg-elevated: #1a2130;
+  --border-primary: #1e2a3a;
+  --border-secondary: #243044;
+  --border-accent: #2a3a52;
+  --text-primary: #e8ecf1;
+  --text-secondary: #8b95a8;
+  --text-muted: #5a6478;
+  --accent-blue: #3b82f6;
+  --accent-blue-dark: #2563eb;
+  --accent-blue-light: #60a5fa;
+  --accent-green: #10b981;
+  --accent-green-dark: #059669;
+  --accent-red: #ef4444;
+  --accent-red-dark: #dc2626;
+  --accent-amber: #f59e0b;
+  --accent-purple: #8b5cf6;
+  --accent-cyan: #06b6d4;
+  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  --gradient-success: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+  --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+  --shadow-glow-blue: 0 0 20px rgba(59, 130, 246, 0.15);
+  --shadow-glow-green: 0 0 20px rgba(16, 185, 129, 0.15);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --font-sans: 'Inter', -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.6;
+  min-height: 100vh;
+  background-image: 
+    radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-accent);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ── HEADER ─────────────────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(10, 14, 23, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border-primary);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+  box-shadow: var(--shadow-glow-blue);
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+}
+
+.logo-subtitle {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: 99px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ── MAIN LAYOUT ───────────────────── */
+.main-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+}
+
+/* ── TABS ─────────────────────────── */
+.tab-nav {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+  padding: 0.25rem;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  width: fit-content;
+}
+
+.tab-btn {
+  padding: 0.6rem 1.25rem;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+
+.tab-btn.active {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+.tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 0.35rem;
+  background: var(--accent-blue);
+  color: #fff;
+  border-radius: 99px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-left: 0.4rem;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ── GRID LAYOUT ─────────────────── */
+.content-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.content-grid-full {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+/* ── CARDS ────────────────────────── */
+.card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--border-secondary);
+}
+
+.card-header {
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid var(--border-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.card-header-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.card-header-icon.blue { background: rgba(59, 130, 246, 0.1); color: var(--accent-blue); }
+.card-header-icon.green { background: rgba(16, 185, 129, 0.1); color: var(--accent-green); }
+.card-header-icon.purple { background: rgba(139, 92, 246, 0.1); color: var(--accent-purple); }
+.card-header-icon.amber { background: rgba(245, 158, 11, 0.1); color: var(--accent-amber); }
+
+.card-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+  flex: 1;
+}
+
+.card-subtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-primary);
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* ── FORM ELEMENTS ───────────────── */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.02em;
+}
+
+.form-label .optional {
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+select option {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.6;
+}
+
+/* ── STYLE PICKER ────────────────── */
+.style-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.style-option {
+  padding: 0.7rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.style-option:hover {
+  border-color: var(--accent-blue);
+  background: var(--bg-elevated);
+}
+
+.style-option.selected {
+  border-color: var(--accent-blue);
+  background: rgba(59, 130, 246, 0.08);
+  box-shadow: 0 0 0 1px var(--accent-blue);
+}
+
+.style-option-emoji {
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+  display: block;
+}
+
+.style-option-name {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* ── BUTTONS ─────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.2rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-primary {
+  background: var(--accent-blue);
+  color: #fff;
+  box-shadow: var(--shadow-glow-blue);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-blue-dark);
+  transform: translateY(-1px);
+}
+
+.btn-success {
+  background: var(--accent-green);
+  color: #fff;
+  box-shadow: var(--shadow-glow-green);
+}
+.btn-success:hover:not(:disabled) {
+  background: var(--accent-green-dark);
+  transform: translateY(-1px);
+}
+
+.btn-danger {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--accent-red);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+.btn-danger:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.btn-ghost {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-secondary);
+}
+.btn-ghost:hover:not(:disabled) {
+  border-color: var(--accent-blue);
+  background: var(--bg-elevated);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-secondary);
+}
+.btn-outline:hover:not(:disabled) {
+  border-color: var(--accent-blue);
+  color: var(--text-primary);
+}
+
+.btn-amber {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--accent-amber);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+.btn-amber:hover:not(:disabled) {
+  background: rgba(245, 158, 11, 0.2);
+}
+
+.btn-sm {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.78rem;
+}
+
+.btn-lg {
+  padding: 0.8rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: var(--radius-sm);
+}
+
+.btn-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* ── POST PREVIEW ────────────────── */
+.preview-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.preview-empty-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-secondary);
+}
+
+.preview-empty h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.preview-empty p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  max-width: 300px;
+}
+
+.post-preview {
+  display: none;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.post-preview.visible {
+  display: flex;
+}
+
+.preview-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.preview-meta-chip {
+  padding: 0.3rem 0.8rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: 99px;
+  font-size: 0.73rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.preview-meta-chip b {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.preview-hook {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #93c5fd;
+  line-height: 1.5;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.preview-caption {
+  font-size: 0.875rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  color: var(--text-primary);
+}
+
+.preview-hashtags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.preview-hashtag {
+  padding: 0.25rem 0.7rem;
+  background: rgba(59, 130, 246, 0.08);
+  color: var(--accent-blue-light);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.preview-insight {
+  padding: 0.9rem 1.1rem;
+  background: var(--bg-tertiary);
+  border-left: 3px solid var(--accent-blue);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.preview-image {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-secondary);
+}
+
+.preview-image img {
+  width: 100%;
+  display: block;
+}
+
+.preview-divider {
+  height: 1px;
+  background: var(--border-primary);
+}
+
+/* ── REGEN DRAWER ────────────────── */
+.regen-drawer {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: none;
+}
+
+.regen-drawer.open {
+  display: block;
+}
+
+/* ── PROGRESS STEPS ─────────────── */
+.progress-steps {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.progress-step {
+  flex: 1;
+  height: 3px;
+  background: var(--border-accent);
+  border-radius: 99px;
+  transition: all 0.4s ease;
+}
+
+.progress-step.active {
+  background: var(--accent-blue);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+}
+
+.progress-step.done {
+  background: var(--accent-green);
+}
+
+/* ── QUEUE ITEMS ────────────────── */
+.queue-item {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.queue-item:hover {
+  border-color: var(--border-accent);
+}
+
+.queue-item-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.queue-item-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 99px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.queue-item-badge.pending {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--accent-blue);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.queue-item-badge.posted {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--accent-green);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.queue-item-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.queue-item-hook {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #93c5fd;
+  margin-bottom: 0.5rem;
+}
+
+.queue-item-caption {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-height: 100px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  margin-bottom: 0.75rem;
+}
+
+.queue-item-image {
+  margin: 0.75rem 0;
+}
+
+.queue-item-image img {
+  max-width: 200px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-secondary);
+}
+
+.queue-item-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-primary);
+  flex-wrap: wrap;
+}
+
+/* ── SCHEDULER JOB ROW ─────────── */
+.job-row {
+  display: grid;
+  grid-template-columns: 130px 1fr 150px 90px 40px;
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.9rem 1rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.5rem;
+}
+
+.job-row input[type="time"],
+.job-row input[type="date"] {
+  padding: 0.45rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+.job-row input[type="date"] {
+  margin-top: 0.3rem;
+}
+
+.job-row select {
+  padding: 0.45rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+.job-delete-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: var(--radius-sm);
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+  margin-top: 0.3rem;
+}
+
+.job-delete-btn:hover {
+  color: var(--accent-red);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.job-column-headers {
+  display: grid;
+  grid-template-columns: 130px 1fr 150px 90px 40px;
+  gap: 0.75rem;
+  padding: 0 1rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── SCHEDULER STATUS ──────────── */
+.sched-status-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.sched-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.sched-indicator.on {
+  background: var(--accent-green);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ── LOGS TABLE ─────────────────── */
+.logs-table-wrap {
+  overflow-x: auto;
+}
+
+.logs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.logs-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-primary);
+  white-space: nowrap;
+}
+
+.logs-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-primary);
+  vertical-align: middle;
+}
+
+.logs-table tr:hover td {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.logs-table .cell-clip {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.log-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 99px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.log-badge-success { background: rgba(16, 185, 129, 0.12); color: var(--accent-green); }
+.log-badge-fail { background: rgba(239, 68, 68, 0.12); color: var(--accent-red); }
+.log-badge-dry { background: rgba(245, 158, 11, 0.12); color: var(--accent-amber); }
+.log-badge-scheduled { background: rgba(139, 92, 246, 0.12); color: var(--accent-purple); }
+.log-badge-queued { background: rgba(59, 130, 246, 0.12); color: var(--accent-blue); }
+
+/* ── TOAST NOTIFICATIONS ────────── */
+.toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.toast {
+  padding: 0.85rem 1.1rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  max-width: 380px;
+  pointer-events: auto;
+  box-shadow: var(--shadow-lg);
+  transform: translateX(120%);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toast.show {
+  transform: translateX(0);
+}
+
+.toast.toast-success { border-left: 3px solid var(--accent-green); }
+.toast.toast-error { border-left: 3px solid var(--accent-red); }
+.toast.toast-info { border-left: 3px solid var(--accent-blue); }
+.toast.toast-warning { border-left: 3px solid var(--accent-amber); }
+
+.toast-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* ── SPINNER ────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── EMPTY STATE ────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--text-muted);
+}
+
+.empty-state-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  opacity: 0.5;
+}
+
+.empty-state h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
+}
+
+.empty-state p {
+  font-size: 0.82rem;
+}
+
+/* ── RESPONSIVE ─────────────────── */
+@media (max-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .job-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .job-column-headers {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 1rem;
+  }
+  
+  .main-container {
+    padding: 1rem;
+  }
+  
+  .tab-nav {
+    overflow-x: auto;
+    width: 100%;
+  }
+  
+  .style-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── DRY RUN TOGGLE ────────────── */
+.dry-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.dry-toggle input[type="checkbox"] {
+  accent-color: var(--accent-blue);
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+/* ── ANIMATIONS ─────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon">in</div>
+    <div>
+      <div class="logo-text">Content Studio</div>
+      <div class="logo-subtitle">LinkedIn Auto Poster</div>
+    </div>
+  </div>
+  
+  <div class="header-actions">
+    <div class="status-badge">
+      <div class="status-dot"></div>
+      Jatin Dhanda
+    </div>
+  </div>
+</header>
+
+<!-- MAIN CONTAINER -->
+<div class="main-container">
+  
+  <!-- TABS -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('compose')">
+      ✨ Compose
+    </button>
+    <button class="tab-btn" onclick="switchTab('pending')">
+      📋 Pending Approvals
+      <span class="tab-badge" id="pendingBadge">0</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('scheduler')">
+      ⏰ Scheduler
+    </button>
+    <button class="tab-btn" onclick="switchTab('history')">
+      📊 Run History
+    </button>
+  </div>
+
+  <!-- COMPOSE TAB -->
+  <div class="tab-content active" id="tab-compose">
+    <div class="content-grid">
+      
+      <!-- LEFT: Compose Form -->
+      <div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon blue">✏️</div>
+            <span class="card-title">Create Post</span>
+            <span class="card-subtitle">AI-Powered</span>
+          </div>
+          <div class="card-body">
+            <div class="progress-steps">
+              <div class="progress-step active" id="step1"></div>
+              <div class="progress-step" id="step2"></div>
+              <div class="progress-step" id="step3"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Topic <span class="optional">(leave blank for random)</span></label>
+              <input type="text" id="topic" placeholder="e.g., Remote work productivity tips..." />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Style</label>
+              <div class="style-grid" id="styleGrid"></div>
+              <input type="hidden" id="selectedStyle" value="motivational" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Extra Context <span class="optional">(optional)</span></label>
+              <textarea id="extraCtx" rows="2" placeholder="e.g., Target audience is startup founders, mention my new course..."></textarea>
+            </div>
+
+            <button class="btn btn-primary btn-block btn-lg" id="genBtn" onclick="generatePost(this)">
+              ✨ Generate Post
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Preview -->
+      <div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon purple">👁️</div>
+            <span class="card-title">Post Preview</span>
+            <span id="attemptBadge" style="display:none;font-size:0.72rem;color:var(--text-muted)">
+              Attempt <b id="attemptNum" style="color:var(--text-primary)">1</b>
+            </span>
+          </div>
+          <div class="card-body">
+            
+            <!-- Empty State -->
+            <div class="preview-empty" id="emptyState">
+              <div class="preview-empty-icon">📝</div>
+              <h3>Your Post Will Appear Here</h3>
+              <p>Pick a topic, choose a style, and click <b>Generate Post</b> to create AI-powered content.</p>
+            </div>
+
+            <!-- Post Preview -->
+            <div class="post-preview" id="postPreview">
+              <div class="preview-meta" id="metaRow"></div>
+              <div class="preview-hook" id="hookLine"></div>
+              <div class="preview-caption" id="captionBox"></div>
+              <div class="preview-hashtags" id="hashtagsRow"></div>
+              
+              <div id="imgSection" style="display:none">
+                <div class="preview-image">
+                  <img id="genImg" src="" alt="AI Generated" />
+                </div>
+              </div>
+              
+              <div class="preview-insight" id="whyBox"></div>
+              
+              <div class="preview-divider"></div>
+              
+              <div class="btn-row">
+                <button class="btn btn-success" onclick="doPost(false, this)">✅ Post to LinkedIn</button>
+                <button class="btn btn-ghost" onclick="doPost(true, this)">🔍 Dry Run</button>
+                <button class="btn btn-danger" onclick="openDrawer()">🔄 Regenerate</button>
+              </div>
+
+              <!-- Regenerate Drawer -->
+              <div class="regen-drawer" id="regenDrawer">
+                <div class="form-group">
+                  <label class="form-label">What should change? <span class="optional">(optional)</span></label>
+                  <input type="text" id="regenNote" placeholder="e.g., Make it shorter, punchier hook, more emojis..." />
+                </div>
+                <div class="btn-row">
+                  <button class="btn btn-primary" id="regenBtn" onclick="doRegenerate(this)">
+                    🔄 Regenerate + Add Image
+                  </button>
+                  <button class="btn btn-outline" onclick="closeDrawer()">Cancel</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PENDING APPROVALS TAB -->
+  <div class="tab-content" id="tab-pending">
+    <div class="content-grid-full">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon amber">📋</div>
+          <span class="card-title">Pending Approvals</span>
+          <span id="queueCount" style="font-size:0.78rem;color:var(--text-muted)">0 posts</span>
+          <button class="btn btn-ghost btn-sm" onclick="loadPendingQueue()" style="margin-left:auto">
+            ↻ Refresh
+          </button>
+        </div>
+        <div class="card-body" id="pendingQueueBody">
+          <div class="empty-state">
+            <div class="empty-state-icon">📭</div>
+            <h4>No Pending Posts</h4>
+            <p>Scheduled posts and queue items will appear here for your review and approval.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHEDULER TAB -->
+  <div class="tab-content" id="tab-scheduler">
+    <div class="content-grid-full">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon green">⏰</div>
+          <span class="card-title">Post Scheduler</span>
+          
+          <!-- Status -->
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-left:auto">
+            <div class="sched-indicator" id="schedIndicator"></div>
+            <span id="schedStatusText" style="font-size:0.78rem;color:var(--text-muted)">Stopped</span>
+          </div>
+          
+          <!-- Controls -->
+          <div style="display:flex;gap:0.5rem;margin-left:1rem">
+            <button class="btn btn-ghost btn-sm" onclick="schedAddJob()">＋ Add Job</button>
+            <button class="btn btn-success btn-sm" id="schedStartBtn" onclick="schedStart()">▶ Start</button>
+            <button class="btn btn-danger btn-sm" id="schedStopBtn" onclick="schedStop()" style="display:none">■ Stop</button>
+          </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="sched-status-bar" id="schedBar" style="display:none">
+          <span class="sched-next" id="schedNext" style="font-size:0.8rem;color:var(--text-secondary)"></span>
+        </div>
+
+        <div class="card-body">
+          <div class="job-column-headers">
+            <span>Date & Time</span>
+            <span>Topic (blank = random)</span>
+            <span>Style</span>
+            <span>Dry Run</span>
+            <span></span>
+          </div>
+          
+          <div id="jobList">
+            <div class="empty-state" id="emptyJobs">
+              <div class="empty-state-icon">📅</div>
+              <h4>No Jobs Scheduled</h4>
+              <p>Click <b>＋ Add Job</b> to schedule your first automated post.</p>
+            </div>
+          </div>
+          
+          <div class="btn-row" style="margin-top:1rem">
+            <button class="btn btn-ghost btn-sm" onclick="schedSave()">💾 Save Jobs</button>
+            <button class="btn btn-amber btn-sm" id="runNowBtn" onclick="schedRunNow()">⚡ Run Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RUN HISTORY TAB -->
+  <div class="tab-content" id="tab-history">
+    <div class="content-grid-full">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon purple">📊</div>
+          <span class="card-title">Run History</span>
+          <button class="btn btn-ghost btn-sm" onclick="loadLogs()" style="margin-left:auto">↻ Refresh</button>
+        </div>
+        <div class="logs-table-wrap">
+          <table class="logs-table">
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Source</th>
+                <th>Topic</th>
+                <th>Style</th>
+                <th>Hook Preview</th>
+                <th>Chars</th>
+                <th>Posted At</th>
+              </tr>
+            </thead>
+            <tbody id="logsBody">
+              <tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text-muted)">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   DATA & STATE
+═══════════════════════════════════════════════════════ */
+const STYLES = [
+  { key: 'motivational', emoji: '🔥', label: 'Motivational' },
+  { key: 'educational', emoji: '📚', label: 'Educational' },
+  { key: 'storytelling', emoji: '📖', label: 'Storytelling' },
+  { key: 'thought_leadership', emoji: '💡', label: 'Thought Leadership' },
+  { key: 'casual', emoji: '💬', label: 'Casual & Friendly' },
+  { key: 'achievement', emoji: '🏆', label: 'Achievement' }
+];
+
+let attempt = 0;
+let schedJobs = [];
+let schedPoll = null;
+let queuePoll = null;
+
+/* ═══════════════════════════════════════════════════════
+   TAB SWITCHING
+═══════════════════════════════════════════════════════ */
+function switchTab(tabName) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  
+  document.querySelector(`[onclick="switchTab('${tabName}')"]`).classList.add('active');
+  document.getElementById(`tab-${tabName}`).classList.add('active');
+  
+  if (tabName === 'pending') loadPendingQueue();
+  if (tabName === 'history') loadLogs();
+  if (tabName === 'scheduler') pollSchedStatus();
+}
+
+/* ═══════════════════════════════════════════════════════
+   STYLE PICKER
+═══════════════════════════════════════════════════════ */
+(function buildStylePicker() {
+  const grid = document.getElementById('styleGrid');
+  STYLES.forEach(s => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'style-option' + (s.key === 'motivational' ? ' selected' : '');
+    btn.dataset.key = s.key;
+    btn.innerHTML = `
+      <span class="style-option-emoji">${s.emoji}</span>
+      <span class="style-option-name">${s.label}</span>
+    `;
+    btn.onclick = () => {
+      document.querySelectorAll('.style-option').forEach(c => c.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('selectedStyle').value = s.key;
+    };
+    grid.appendChild(btn);
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════
+   PROGRESS STEPS
+═══════════════════════════════════════════════════════ */
+function setProgress(step, done = false) {
+  for (let i = 1; i <= 3; i++) {
+    const el = document.getElementById('step' + i);
+    el.className = 'progress-step' + 
+      (i < step ? ' done' : i === step ? (done ? ' done' : ' active') : '');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   GENERATE POST
+═══════════════════════════════════════════════════════ */
+async function generatePost(btn) {
+  setBtnLoading(btn, 'Generating...');
+  setProgress(1);
+  attempt = 1;
+  
+  try {
+    const data = await api('/api/generate', {
+      topic: document.getElementById('topic').value.trim(),
+      style: document.getElementById('selectedStyle').value,
+      extra_context: document.getElementById('extraCtx').value.trim(),
+    });
+    
+    renderPreview(data);
+    setProgress(2);
+    toast('Post generated successfully! Review and approve.', 'info');
+  } catch(e) {
+    toast(e.message, 'error');
+    setProgress(1);
+  } finally {
+    setBtnNormal(btn, '✨ Generate Post');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   REGENERATE
+═══════════════════════════════════════════════════════ */
+async function doRegenerate(btn) {
+  setBtnLoading(btn, 'Regenerating...');
+  
+  try {
+    const data = await api('/api/regenerate', { 
+      note: document.getElementById('regenNote').value.trim() 
+    });
+    
+    attempt++;
+    closeDrawer();
+    renderPreview(data);
+    
+    if (data.image_url) {
+      document.getElementById('genImg').src = data.image_url;
+      document.getElementById('imgSection').style.display = 'block';
+    }
+    
+    toast('Post regenerated with fresh content!', 'info');
+  } catch(e) {
+    toast(e.message, 'error');
+  } finally {
+    setBtnNormal(btn, '🔄 Regenerate + Add Image');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   POST / DRY RUN
+═══════════════════════════════════════════════════════ */
+async function doPost(dryRun, btn) {
+  setBtnLoading(btn, dryRun ? 'Running Dry Run...' : 'Posting...');
+  setProgress(3);
+  
+  try {
+    const data = await api('/api/post', { dry_run: dryRun });
+    
+    if (!data.success) throw new Error(data.error || 'Post failed');
+    
+    setProgress(3, true);
+    toast(
+      dryRun ? '🔍 Dry run complete — NOT published.' : '🎉 Successfully posted to LinkedIn!',
+      'success'
+    );
+    loadLogs();
+  } catch(e) {
+    toast(e.message, 'error');
+    setProgress(2);
+  } finally {
+    setBtnNormal(btn, dryRun ? '🔍 Dry Run' : '✅ Post to LinkedIn');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   RENDER PREVIEW
+═══════════════════════════════════════════════════════ */
+function renderPreview(data) {
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('postPreview').classList.add('visible');
+  document.getElementById('attemptBadge').style.display = 'inline';
+  document.getElementById('attemptNum').textContent = attempt;
+  document.getElementById('imgSection').style.display = 'none';
+  
+  document.getElementById('metaRow').innerHTML = [
+    metaChip('📏', `${data.char_count} chars`),
+    metaChip('⏰', data.suggested_post_time || 'Best time'),
+    metaChip('🎨', data.style || 'Style'),
+  ].join('');
+  
+  document.getElementById('hookLine').textContent = data.hook || '';
+  document.getElementById('captionBox').textContent = data.caption || '';
+  document.getElementById('whyBox').innerHTML = `<strong>💡 Why this works:</strong> ${esc(data.why_it_works || 'Engaging and authentic content.')}`;
+  document.getElementById('hashtagsRow').innerHTML = (data.hashtags || [])
+    .map(t => `<span class="preview-hashtag">${esc(t)}</span>`)
+    .join('');
+}
+
+function metaChip(icon, text) {
+  return `<span class="preview-meta-chip">${icon} <b>${esc(text)}</b></span>`;
+}
+
+function openDrawer() {
+  document.getElementById('regenDrawer').classList.add('open');
+  document.getElementById('regenNote').focus();
+}
+
+function closeDrawer() {
+  document.getElementById('regenDrawer').classList.remove('open');
+  document.getElementById('regenNote').value = '';
+}
+
+/* ═══════════════════════════════════════════════════════
+   PENDING QUEUE
+═══════════════════════════════════════════════════════ */
+async function loadPendingQueue() {
+  const body = document.getElementById('pendingQueueBody');
+  const countEl = document.getElementById('queueCount');
+  const badgeEl = document.getElementById('pendingBadge');
+  
+  try {
+    const queue = await fetch('/api/queue/list').then(r => r.json());
+    
+    const pendingCount = queue.filter(p => p.status !== 'posted').length;
+    countEl.textContent = `${queue.length} total · ${pendingCount} pending`;
+    badgeEl.textContent = pendingCount;
+    badgeEl.style.display = pendingCount > 0 ? 'inline-flex' : 'none';
+    
+    if (!queue.length) {
+      body.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">📭</div>
+          <h4>No Pending Posts</h4>
+          <p>Scheduled posts and queue items will appear here for your review and approval.</p>
+        </div>`;
+      return;
+    }
+    
+    body.innerHTML = queue.map(post => `
+      <div class="queue-item fade-in" id="queue_${post.id}">
+        <div class="queue-item-header">
+          <span class="queue-item-badge ${post.status === 'posted' ? 'posted' : 'pending'}">
+            ${post.status === 'posted' ? '✅ Posted' : '⏳ Pending'}
+          </span>
+          <span class="queue-item-meta">
+            📌 Topic: <b style="color:var(--text-primary)">${esc(post.topic || 'Random')}</b>
+          </span>
+          <span class="queue-item-meta">
+            🎨 ${esc(post.style || 'Random')}
+          </span>
+          ${post.scheduled_for ? `
+            <span class="queue-item-meta">
+              📅 ${new Date(post.scheduled_for).toLocaleString()}
+            </span>
+          ` : ''}
+          <span class="queue-item-meta" style="margin-left:auto">
+            🕐 ${new Date(post.added_at).toLocaleString()}
+          </span>
+        </div>
+        
+        ${post.generated?.hook ? `
+          <div class="queue-item-hook">${esc(post.generated.hook)}</div>
+        ` : ''}
+        
+        <div class="queue-item-caption">${esc(post.caption || '').substring(0, 350)}${(post.caption || '').length > 350 ? '...' : ''}</div>
+        
+        ${post.image_path ? `
+          <div class="queue-item-image">
+            <img src="/assets/${post.image_path.split('/').pop()}" alt="Post image" />
+          </div>
+        ` : ''}
+        
+        ${post.generated?.hashtags ? `
+          <div style="display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:0.75rem">
+            ${post.generated.hashtags.map(t => `<span class="preview-hashtag">${esc(t)}</span>`).join('')}
+          </div>
+        ` : ''}
+        
+        <div class="queue-item-actions">
+          <button class="btn btn-success btn-sm" onclick="queuePost('${post.id}')">✅ Post Now</button>
+          <button class="btn btn-ghost btn-sm" onclick="queueDryRun('${post.id}')">🔍 Dry Run</button>
+          <button class="btn btn-outline btn-sm" onclick="queueEdit('${post.id}')">✏️ Edit</button>
+          <button class="btn btn-amber btn-sm" onclick="queueRegenerate('${post.id}')">🔄 Regenerate</button>
+          <button class="btn btn-danger btn-sm" onclick="queueRemove('${post.id}')" style="margin-left:auto">🗑️ Remove</button>
+        </div>
+      </div>
+    `).join('');
+    
+  } catch(e) {
+    body.innerHTML = `<div class="empty-state"><p style="color:var(--accent-red)">Failed to load: ${esc(e.message)}</p></div>`;
+  }
+}
+
+async function queuePost(id, dryRun = false) {
+  if (!confirm(dryRun ? 'Run as dry run?' : 'Post this to LinkedIn now?')) return;
+  toast(dryRun ? 'Running dry run...' : 'Posting...', 'info');
+  
+  try {
+    const data = await api(`/api/queue/post/${id}`, { dry_run: dryRun });
+    if (data.success) {
+      toast(dryRun ? '🔍 Dry run complete!' : '✅ Posted successfully!', 'success');
+      loadPendingQueue();
+      loadLogs();
+    } else {
+      throw new Error(data.error || 'Post failed');
+    }
+  } catch(e) {
+    toast(e.message, 'error');
+  }
+}
+
+function queueDryRun(id) { queuePost(id, true); }
+
+async function queueRemove(id) {
+  if (!confirm('Remove this post from the queue?')) return;
+  try {
+    await api(`/api/queue/remove/${id}`, {});
+    toast('Removed from queue', 'info');
+    loadPendingQueue();
+  } catch(e) {
+    toast(e.message, 'error');
+  }
+}
+
+async function queueRegenerate(id) {
+  toast('Regenerating...', 'info');
+  try {
+    const data = await api(`/api/queue/regenerate/${id}`, {});
+    if (data.success) {
+      toast('Post regenerated!', 'success');
+      loadPendingQueue();
+    }
+  } catch(e) {
+    toast(e.message, 'error');
+  }
+}
+
+async function queueEdit(id) {
+  const newCaption = prompt('Edit your post caption:', '');
+  if (newCaption === null) return;
+  try {
+    await api(`/api/queue/edit/${id}`, { caption: newCaption });
+    toast('Post updated!', 'success');
+    loadPendingQueue();
+  } catch(e) {
+    toast(e.message, 'error');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   SCHEDULER
+═══════════════════════════════════════════════════════ */
+function schedAddJob() {
+  schedJobs.push({
+    id: 'job_' + Date.now(),
+    time: '09:00',
+    date: '',
+    topic: '',
+    style: '',
+    dry_run: false,
+  });
+  renderJobList();
+}
+
+function schedDeleteJob(id) {
+  schedJobs = schedJobs.filter(j => j.id !== id);
+  renderJobList();
+}
+
+function collectJobs() {
+  return schedJobs.map(j => {
+    const row = document.getElementById('row_' + j.id);
+    if (!row) return j;
+    return {
+      id: j.id,
+      time: row.querySelector('.j-time').value || '09:00',
+      date: row.querySelector('.j-date')?.value || '',
+      topic: row.querySelector('.j-topic').value.trim(),
+      style: row.querySelector('.j-style').value,
+      dry_run: row.querySelector('.j-dry').checked,
+    };
+  });
+}
+
+function renderJobList() {
+  const list = document.getElementById('jobList');
+  const empty = document.getElementById('emptyJobs');
+  
+  if (!schedJobs.length) {
+    list.innerHTML = '';
+    list.appendChild(empty);
+    empty.style.display = 'block';
+    return;
+  }
+  
+  empty.style.display = 'none';
+  
+  const styleOpts = [['', 'Random'], ...STYLES.map(s => [s.key, s.label])];
+  
+  list.innerHTML = schedJobs.map(j => `
+    <div class="job-row" id="row_${j.id}">
+      <div>
+        <input type="time" class="j-time" value="${esc(j.time)}" style="margin-bottom:0.25rem" />
+        <input type="date" class="j-date" value="${esc(j.date || '')}" 
+               style="font-size:0.75rem;padding:0.35rem 0.5rem" 
+               placeholder="Any day" />
+      </div>
+      <input type="text" class="j-topic" placeholder="Leave blank for random topic" value="${esc(j.topic)}" />
+      <select class="j-style">
+        ${styleOpts.map(([v,l]) => `<option value="${v}" ${j.style===v?'selected':''}>${esc(l)}</option>`).join('')}
+      </select>
+      <label class="dry-toggle">
+        <input type="checkbox" class="j-dry" ${j.dry_run?'checked':''} />
+        Dry run
+      </label>
+      <button class="job-delete-btn" onclick="schedDeleteJob('${j.id}')" title="Remove">✕</button>
+    </div>
+  `).join('');
+}
+
+async function schedSave() {
+  const jobs = collectJobs();
+  schedJobs = jobs;
+  try {
+    await api('/api/scheduler/save', { jobs });
+    toast('Jobs saved successfully.', 'info');
+  } catch(e) {
+    toast(e.message, 'error');
+  }
+}
+
+async function schedStart() {
+  const jobs = collectJobs();
+  schedJobs = jobs;
+  const btn = document.getElementById('schedStartBtn');
+  setBtnLoading(btn, 'Starting...');
+  
+  try {
+    await api('/api/scheduler/start', { jobs });
+    toast(`✅ Scheduler started with ${jobs.length} job(s)!`, 'success');
+    pollSchedStatus();
+  } catch(e) {
+    toast(e.message, 'error');
+  } finally {
+    setBtnNormal(btn, '▶ Start');
+  }
+}
+
+async function schedStop() {
+  const btn = document.getElementById('schedStopBtn');
+  setBtnLoading(btn, 'Stopping...');
+  
+  try {
+    await fetch('/api/scheduler/stop', { method: 'POST' });
+    toast('Scheduler stopped.', 'warning');
+    updateSchedUI(false, null, schedJobs);
+  } catch(e) {
+    toast(e.message, 'error');
+  } finally {
+    setBtnNormal(btn, '■ Stop');
+  }
+}
+
+async function schedRunNow() {
+  const jobs = collectJobs();
+  const first = jobs[0] || {};
+  const btn = document.getElementById('runNowBtn');
+  setBtnLoading(btn, 'Firing...');
+  
+  try {
+    const data = await api('/api/scheduler/run-now', {
+      topic: first.topic || '',
+      style: first.style || '',
+      dry_run: first.dry_run || false,
+    });
+    toast('⚡ ' + data.message, 'info');
+    setTimeout(() => { loadLogs(); loadPendingQueue(); }, 5000);
+  } catch(e) {
+    toast(e.message, 'error');
+  } finally {
+    setBtnNormal(btn, '⚡ Run Now');
+  }
+}
+
+function updateSchedUI(running, nextRun, jobs) {
+  const indicator = document.getElementById('schedIndicator');
+  const statusTxt = document.getElementById('schedStatusText');
+  const bar = document.getElementById('schedBar');
+  const startBtn = document.getElementById('schedStartBtn');
+  const stopBtn = document.getElementById('schedStopBtn');
+  const nextEl = document.getElementById('schedNext');
+  
+  indicator.className = 'sched-indicator' + (running ? ' on' : '');
+  statusTxt.textContent = running ? 'Running' : 'Stopped';
+  startBtn.style.display = running ? 'none' : 'inline-flex';
+  stopBtn.style.display = running ? 'inline-flex' : 'none';
+  
+  if (running && nextRun) {
+    bar.style.display = 'flex';
+    nextEl.textContent = `⏰ Next run: ${nextRun}`;
+  } else {
+    bar.style.display = 'none';
+  }
+  
+  if (jobs && !schedJobs.length) {
+    schedJobs = jobs.map((j, i) => ({ id: 'job_' + i, ...j }));
+    renderJobList();
+  }
+}
+
+async function pollSchedStatus() {
+  try {
+    const res = await fetch('/api/scheduler/status').then(r => r.json());
+    updateSchedUI(res.running, res.next_run, res.jobs);
+  } catch {}
+}
+
+/* ═══════════════════════════════════════════════════════
+   LOGS
+═══════════════════════════════════════════════════════ */
+async function loadLogs() {
+  const body = document.getElementById('logsBody');
+  
+  try {
+    const logs = await fetch('/api/logs').then(r => r.json());
+    
+    if (!logs.length) {
+      body.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text-muted)">No runs yet — generate your first post!</td></tr>`;
+      return;
+    }
+    
+    body.innerHTML = logs.slice().reverse().map(l => {
+      let badgeHtml = '';
+      if (l.dry_run) {
+        badgeHtml = '<span class="log-badge log-badge-dry">🔍 Dry</span>';
+      } else if (l.success) {
+        badgeHtml = '<span class="log-badge log-badge-success">✅ Posted</span>';
+      } else {
+        badgeHtml = '<span class="log-badge log-badge-fail">❌ Failed</span>';
+      }
+      
+      let sourceHtml = '';
+      if (l.scheduled) {
+        sourceHtml = '<span class="log-badge log-badge-scheduled">⏰ Scheduled</span>';
+      } else if (l.queued) {
+        sourceHtml = '<span class="log-badge log-badge-queued">📋 Queued</span>';
+      } else {
+        sourceHtml = '<span style="font-size:0.75rem;color:var(--text-muted)">Manual</span>';
+      }
+      
+      const errorHtml = l.error ? 
+        `<div style="font-size:0.7rem;color:var(--accent-red);margin-top:0.2rem">${esc(l.error)}</div>` : '';
+      
+      return `<tr>
+        <td>${badgeHtml}</td>
+        <td>${sourceHtml}</td>
+        <td class="cell-clip" title="${esc(l.topic)}">${esc((l.topic || '').slice(0, 45)) || '<i style="color:var(--text-muted)">—</i>'}</td>
+        <td style="color:var(--text-muted)">${esc(l.style || '—')}</td>
+        <td class="cell-clip" style="color:var(--text-muted)">${esc((l.hook || '').slice(0, 40)) || '—'}</td>
+        <td style="color:var(--text-muted);text-align:center">${l.char_count || '—'}</td>
+        <td style="color:var(--text-muted);white-space:nowrap;font-size:0.75rem">
+          ${esc((l.posted_at || l.timestamp || '').slice(0, 16).replace('T', ' '))}${errorHtml}
+        </td>
+      </tr>`;
+    }).join('');
+  } catch {
+    body.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--accent-red)">Failed to load logs</td></tr>`;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   UTILITY FUNCTIONS
+═══════════════════════════════════════════════════════ */
+async function api(url, body) {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+  return data;
+}
+
+function setBtnLoading(btn, text) {
+  btn.disabled = true;
+  btn.dataset.original = btn.innerHTML;
+  btn.innerHTML = `<span class="spinner"></span> ${text}`;
+}
+
+function setBtnNormal(btn, text) {
+  btn.disabled = false;
+  btn.textContent = text;
+}
+
+function esc(s = '') {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function toast(msg, type = 'info') {
+  const icons = { 
+    success: '✅', 
+    error: '⚠️', 
+    info: 'ℹ️', 
+    warning: '⚠️' 
+  };
+  const container = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = `toast toast-${type}`;
+  el.innerHTML = `
+    <span class="toast-icon">${icons[type] || 'ℹ️'}</span>
+    <span>${esc(msg)}</span>
+  `;
+  container.appendChild(el);
+  
+  requestAnimationFrame(() => {
+    el.classList.add('show');
+    setTimeout(() => {
+      el.classList.remove('show');
+      setTimeout(() => el.remove(), 400);
+    }, 4500);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════
+   INITIALIZATION
+═══════════════════════════════════════════════════════ */
+function init() {
+  loadLogs();
+  loadPendingQueue();
+  pollSchedStatus();
+  
+  // Refresh polls
+  schedPoll = setInterval(pollSchedStatus, 15000);
+  queuePoll = setInterval(loadPendingQueue, 30000);
+  
+  // Initial job render
+  renderJobList();
+}
+
+// Start the app
+init();
+</script>
+
+</body>
+</html>

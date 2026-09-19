@@ -1,0 +1,29 @@
+{
+  "enabled": false,
+  "jobs": [
+    {
+      "id": "job_1779465456539",
+      "date": "2026-05-22",
+      "dry_run": false,
+      "style": "",
+      "time": "22:53",
+      "topic": "AI in Finance"
+    },
+    {
+      "id": "job_1783528507280",
+      "time": "09:00",
+      "date": "",
+      "topic": "",
+      "style": "",
+      "dry_run": false
+    },
+    {
+      "id": "job_1783528510990",
+      "time": "09:00",
+      "date": "",
+      "topic": "",
+      "style": "",
+      "dry_run": false
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "topic": "How AI hacked Hugging face",
+  "style": "educational",
+  "extra_context": "",
+  "dry_run": false,
+  "image_path": null,
+  "auto_approve": false,
+  "generated": {
+    "hook": "My jaw dropped when I learned how AI, not a human, exploited a major platform like Hugging Face.",
+    "caption": "My jaw dropped when I learned how AI, not a human, exploited a major platform like Hugging Face. \ud83e\udd2f It sounds like a sci-fi plot, but it's a real-world warning for anyone building with or deploying AI models.\n\nBasically, researchers demonstrated how a *malicious AI model* could be uploaded to the platform. This wasn't about a bug in Hugging Face's code, but rather a clever way to package harmful instructions within a seemingly innocent model. When someone downloaded and ran this model, it could execute arbitrary code on their machine \u2013 not good! \ud83d\ude2c\n\nThink about it: we trust these platforms to host safe, functional models. But if an AI itself can become the Trojan horse, bypassing traditional security checks, it changes the game entirely. It\u2019s a stark reminder that the security perimeter isn't just around the infrastructure; it's increasingly *inside* the models themselves.\n\nFor me, this highlights a critical lesson: trust, but verify, applies more than ever in the age of AI. We need robust scanning, sandboxing, and deeper introspection into what our models are actually doing, not just what they're *supposed* to do. It\u2019s a complex challenge, but",
+    "hashtags": [
+      "#LinkedIn",
+      "#Growth",
+      "#Learning"
+    ],
+    "image_prompt": "Professional post about How AI hacked Hugging face, modern style",
+    "suggested_post_time": "Tuesday 9 AM",
+    "why_it_works": "Authentic voice with a clear hook drives engagement.",
+    "char_count": 1160,
+    "style": "educational",
+    "topic": "How AI hacked Hugging face"
+  },
+  "caption": "My jaw dropped when I learned how AI, not a human, exploited a major platform like Hugging Face. \ud83e\udd2f It sounds like a sci-fi plot, but it's a real-world warning for anyone building with or deploying AI models.\n\nBasically, researchers demonstrated how a *malicious AI model* could be uploaded to the platform. This wasn't about a bug in Hugging Face's code, but rather a clever way to package harmful instructions within a seemingly innocent model. When someone downloaded and ran this model, it could execute arbitrary code on their machine \u2013 not good! \ud83d\ude2c\n\nThink about it: we trust these platforms to host safe, functional models. But if an AI itself can become the Trojan horse, bypassing traditional security checks, it changes the game entirely. It\u2019s a stark reminder that the security perimeter isn't just around the infrastructure; it's increasingly *inside* the models themselves.\n\nFor me, this highlights a critical lesson: trust, but verify, applies more than ever in the age of AI. We need robust scanning, sandboxing, and deeper introspection into what our models are actually doing, not just what they're *supposed* to do. It\u2019s a complex challenge, but",
+  "rejection_count": 1,
+  "rejection_note": "",
+  "approved": false,
+  "success": false,
+  "error": null,
+  "posted_at": null
+}
